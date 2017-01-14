@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_menu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="@color/background"
+    tools:context="bootcamp.com.bookshare.Menu">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="2"
+    android:background="@color/panelBackground">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:background="@color/panelBackground">
+
+        <Button
+            android:id="@+id/myBooksButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Moje książki" />
+
+        <Button
+            android:id="@+id/libraryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Biblioteka"
+            android:layout_marginTop="45dp" />
+
+        <Button
+            android:id="@+id/allUsersButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Użytkownicy"
+            android:layout_marginTop="45dp" />
+
+        <Button
+            android:id="@+id/logoutButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Wyloguj"
+            android:layout_marginTop="45dp" />
+
+    </LinearLayout>
+</LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/frameLayout">
+
+    </FrameLayout>
+</LinearLayout>
