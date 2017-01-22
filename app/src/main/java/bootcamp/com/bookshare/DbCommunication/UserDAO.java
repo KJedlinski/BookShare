@@ -3,10 +3,6 @@ package bootcamp.com.bookshare.DbCommunication;
 import android.content.ContentValues;
 import android.content.Context;
 
-/**
- * Created by krystian on 22.01.17.
- */
-
 class UserDAO {
     private static UserDAO instance;
 
