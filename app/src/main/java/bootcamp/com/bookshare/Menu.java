@@ -5,9 +5,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Button;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -46,7 +44,7 @@ public class Menu extends AppCompatActivity {
     @OnClick(R.id.allUsersButton)
     public void  onAllUsersButtonClick(){
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayout, new Users());
+        fragmentTransaction.replace(R.id.frameLayout, new UsersFragment());
         fragmentTransaction.commit();
     }
 

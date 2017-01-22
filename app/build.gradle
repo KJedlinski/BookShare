@@ -14,7 +14,9 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            //Konwertuje kod na czysty pozbywając się zbędnych spacji itd. bez zmiany działania programu
+            minifyEnabled true
+            //Domyślnie nasz kod jest zaciemniany podczas budowania aplikacji w wersji release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
