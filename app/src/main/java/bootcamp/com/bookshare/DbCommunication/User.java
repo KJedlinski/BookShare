@@ -4,19 +4,42 @@ package bootcamp.com.bookshare.DbCommunication;
  * Created by krystian on 17.01.17.
  */
 
-class User {
+public class User {
 
     private String id;
     private String login;
     private String password;
     private String name;
     private String surname;
+    private boolean authorizedLogin;
+    private boolean authorizedPasswd;
+
 
     public User(String login, String name, String password, String surname) {
         this.login = login;
         this.name = name;
         this.password = password;
         this.surname = surname;
+    }
+
+    public boolean isAuthorizedLogin() {
+        return authorizedLogin;
+    }
+
+    public void setAuthorizedLogin(boolean authorizedLogin) {
+        this.authorizedLogin = authorizedLogin;
+    }
+
+    public boolean isAuthorizedPasswd() {
+        return authorizedPasswd;
+    }
+
+    public void setAuthorizedPasswd(boolean authorizedPasswd) {
+        this.authorizedPasswd = authorizedPasswd;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getId(){ return id;}

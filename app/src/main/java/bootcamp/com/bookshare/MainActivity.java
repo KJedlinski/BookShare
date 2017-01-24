@@ -13,6 +13,8 @@ import android.widget.Toast;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import bootcamp.com.bookshare.DbCommunication.User;
+import bootcamp.com.bookshare.DbCommunication.UserDAO;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -42,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
             loginField.setText(loginData.getString("Login", ""));
             passwordField.setText(loginData.getString("Password", ""));
         }
-
     }
 
     @OnClick(R.id.button)
@@ -51,8 +52,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void logIN() {
-
-        //TODO implement login with database and password validation
+        boolean passwdOk = false;
         String login = loginField.getText().toString();
         String passwd = passwordField.getText().toString();
 
@@ -61,17 +61,42 @@ public class MainActivity extends AppCompatActivity {
         Matcher loginMatcher = loginPattern.matcher(login);
         Matcher passwdMatcher = passwdPattern.matcher(passwd);
 
-        if (loginMatcher.matches() && passwdMatcher.matches()) {
-            Intent menuActivity = new Intent(this, Menu.class);
-            startActivity(menuActivity);
-        } else {
+        if (!loginMatcher.matches()) {
             loginField.setText("");
             passwordField.setText("");
-            Toast.makeText(this, "Niepoprawny login lub hasło!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Login musi mieć od 5 do 10 znaków!", Toast.LENGTH_SHORT).show();
             return;
+        } else if (!passwdMatcher.matches()) {
+            loginField.setText("");
+            passwordField.setText("");
+            Toast.makeText(this, "Hasło musi mieć od 3 do 8 znaków!", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            User user = new User(login,null,passwd,null);
+            passwdOk = performAuthorization(user);
+            if (rememberUser.isChecked() && passwdOk) saveLoginData(login, passwd);
+            if (passwdOk) {
+                Intent menuActivity = new Intent(this, Menu.class);
+                startActivity(menuActivity);
+            }
         }
+    }
 
-        if (rememberUser.isChecked()) saveLoginData(login, passwd);
+    public boolean performAuthorization(User user) {
+
+        UserDAO.authorizeUser(user, this);
+        if (!user.isAuthorizedLogin()){
+            loginField.setText("");
+            passwordField.setText("");
+            Toast.makeText(this, "Użytkownik o podanym loginie nie istnieje!", Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (!user.isAuthorizedPasswd()){
+            loginField.setText("");
+            passwordField.setText("");
+            Toast.makeText(this, "Wpisałeś błędne hasło. Spróbuj ponownie.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     public void saveLoginData(String l, String p) {

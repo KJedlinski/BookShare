@@ -18,8 +18,7 @@ public class SQLiteData extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE users(id INTEGER PRIMARY KEY AUTO INCREMENT, name TEXT, surname TEXT" +
-                "login TEXT, password TEXT)");
+        sqLiteDatabase.execSQL("CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, surname TEXT, login TEXT, password TEXT)");
     }
 
     @Override

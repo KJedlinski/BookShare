@@ -2,12 +2,13 @@ package bootcamp.com.bookshare.DbCommunication;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 
-class UserDAO {
+public class UserDAO {
     private static UserDAO instance;
 
-    public UserDAO getUserDAOInstance(){
-        if (instance == null){
+    public UserDAO getUserDAOInstance() {
+        if (instance == null) {
             instance = new UserDAO();
         }
         return instance;
@@ -21,7 +22,6 @@ class UserDAO {
         contentValues.put("login", user.getLogin());
         contentValues.put("password", user.getPassword());
         SQLiteData.getDatabase(context).getWritableDatabase().insertOrThrow("users", null, contentValues);
-
     }
 
     public void removeUser(User user, Context context) {
@@ -41,5 +41,44 @@ class UserDAO {
 
     public String showUser(User user) {
         return user.toString();
+    }
+
+    public static void authorizeUser(User user, Context context) {
+
+        String id = "";
+        String name = "";
+        String passwd = "";
+        String surname = "";
+        String login = null;
+
+        Cursor registeredUsers = SQLiteData.getDatabase(context)
+                .getReadableDatabase()
+                .query("users", new String[]{"id", "name", "surname", "login", "password"}, null, null, null, null, null);
+
+        while (registeredUsers.moveToNext()) {
+            if (registeredUsers.getString(1).equals(user.getLogin())) {
+                id = registeredUsers.getString(0);
+                name = registeredUsers.getString(1);
+                surname = registeredUsers.getString(2);
+                login = registeredUsers.getString(3);
+                passwd = registeredUsers.getString(4);
+                break;
+            }
+        }
+        registeredUsers.close();
+
+        if (login == null) {
+            user.setAuthorizedLogin(false);
+            return;
+        } else if (!passwd.equals(user.getPassword())) {
+            user.setAuthorizedPasswd(false);
+            return;
+        } else {
+            user.setId(id);
+            user.setName(name);
+            user.setSurname(surname);
+            user.setAuthorizedLogin(true);
+            user.setAuthorizedPasswd(true);
+        }
     }
 }
